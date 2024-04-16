@@ -50,3 +50,17 @@ class DB:
         """
         self.teachers[id].update(data)
         self.sync()
+        
+    def new_class(self, id, data):
+        """
+        Create a new class entry in the db.
+        """
+        self.classes[id] = data
+        self.sync()
+        
+    def update_class(self, id, data):
+        """
+        Update an existing class's entry in the db.
+        """
+        self.classes[id].update(data)
+        self.sync()
