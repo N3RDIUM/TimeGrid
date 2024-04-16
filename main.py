@@ -30,7 +30,7 @@ with open('.mode', 'r') as f:
     PRODUCTION = f.read().split('\n')[1] == "PRODUCTION"
     
 if not PRODUCTION:
-    logging.warn("Running in development mode! Please edit the .mode file if you are an end-user.")
+    logging.warning("Running in development mode! Please edit the .mode file if you are an end-user.")
 else:
     logging.info("Running in production mode!")
 
@@ -38,7 +38,7 @@ else:
 DB_PATH = os.path.abspath('./db/')
 
 # Database init
-db = DB(DB_PATH)
+db = DB(DB_PATH, PRODUCTION)
 
 # Create the dirs if they don't exist
 os.makedirs(DB_PATH, exist_ok=True)
@@ -88,6 +88,31 @@ def new_class():
     data = flask.request.get_json()
     id = data['id']
     del data['id']
+    data.update({
+        'class-teacher-id': "",
+        'time-table': {
+            'monday': [
+                {
+                    'from': 0,
+                    'to': 60, # Minutes
+                    'subject': 'example',
+                    'teacher-assigned': 'example',
+                },
+                {
+                    'from': 60,
+                    'to': 75, # Minutes
+                    'subject': 'break',
+                    'teacher-assigned': 'n/a',
+                },
+            ],
+            'tuesday': [],
+            'wednesday': [],
+            'thursday': [],
+            'friday': [],
+            'saturday': [],
+            'sunday': [],
+        }
+    })
     db.new_class(id, data)
     return 'OK'
 
@@ -98,6 +123,11 @@ def update_class():
     del data['id']
     db.update_class(id, data)
     return 'OK'
+
+@app.route('/get-class', methods=['POST'])
+def get_class():
+    data = flask.request.get_json()
+    return flask.jsonify(db.classes[data['id']])
 
 # Driver code
 if __name__ == "__main__":
