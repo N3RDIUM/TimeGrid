@@ -17,7 +17,11 @@ logging.basicConfig(
 # Update notifier
 try:
     import requests 
-    # remember to strip()!
+    latest = requests.get('https://raw.githubusercontent.com/N3RDIUM/TimeGrid/main/latest-version').text
+    if __version__ != latest:
+        logging.warning(f'An update is available! Please run `git pull`. (Your version: {__version__}) (Latest version: {latest})')
+    else:
+        logging.info(f'TimeGrid is already at the latest version. Great!')
 except Exception as e:
     logging.warning(f"Failed to check for updates due to error: \"{e}\". The application will start normally anyway.")
 
