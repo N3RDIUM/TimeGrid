@@ -4,11 +4,22 @@ import logging
 import flask
 import os
 
+# Metadata
+__version__ = 'v0.1-dev'
+__author__ = 'N3RDIUM'
+
 # Logging setup
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
+
+# Update notifier
+try:
+    import requests 
+    # remember to strip()!
+except Exception as e:
+    logging.warning(f"Failed to check for updates due to error: \"{e}\". The application will start normally anyway.")
 
 # Production / Development
 with open('mode', 'r') as f:
