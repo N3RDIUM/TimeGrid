@@ -7,6 +7,6 @@ Why am I doing this? Well, I think that conventional time tables used by schools
 I am making this project for my school with love. I am looking forward to make more such things for my school and help my juniors as an ex-student.
 
 ## Planned features
-- [ ] Fully flexible time table
+- [ ] Fully flexible time table based on data templates
 - [ ] Flask backend, hosted on school server
 - [ ] HTMX frontend, managed by flask templates
