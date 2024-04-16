@@ -17,7 +17,7 @@ logging.basicConfig(
 # Update notifier
 try:
     import requests 
-    latest = requests.get('https://raw.githubusercontent.com/N3RDIUM/TimeGrid/main/latest-version').text
+    latest = requests.get('https://raw.githubusercontent.com/N3RDIUM/TimeGrid/main/latest-version', timeout=1).text
     if __version__ != latest:
         logging.warning(f'An update is available! Please run `git pull`. (Your version: {__version__}) (Latest version: {latest})')
     else:
@@ -36,6 +36,9 @@ else:
 
 # If you change this, make sure you change it at the end of .gitignore too.
 DB_PATH = os.path.abspath('./db/')
+
+# Database init
+db = DB(DB_PATH)
 
 # Create the dirs if they don't exist
 os.makedirs(DB_PATH, exist_ok=True)
