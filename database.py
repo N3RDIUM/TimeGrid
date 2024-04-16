@@ -41,7 +41,6 @@ class DB:
         Create a new teacher entry in the db.
         """
         self.teachers[id] = data
-        print(self.teachers)
         self.sync()
         
     def update_teacher(self, id, data):
